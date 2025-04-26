@@ -7,6 +7,8 @@ import org.springframework.ai.chat.client.advisor.PromptChatMemoryAdvisor;
 import org.springframework.ai.chat.client.observation.ChatClientObservationConvention;
 import org.springframework.ai.chat.memory.ChatMemory;
 import org.springframework.ai.chat.memory.InMemoryChatMemory;
+import org.springframework.ai.ollama.OllamaChatModel;
+import org.springframework.ai.ollama.api.OllamaOptions;
 import org.springframework.ai.openai.OpenAiChatModel;
 import org.springframework.ai.openai.OpenAiChatOptions;
 import org.springframework.ai.openai.OpenAiEmbeddingModel;
@@ -15,6 +17,7 @@ import org.springframework.ai.tool.ToolCallbackProvider;
 import org.springframework.ai.transformer.splitter.TokenTextSplitter;
 import org.springframework.ai.vectorstore.SimpleVectorStore;
 import org.springframework.ai.vectorstore.pgvector.PgVectorStore;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -69,12 +72,12 @@ public class OpenAIConfig {
     }
 
     @Bean
-    public ChatClient chatClient(OpenAiChatModel openAiChatModel, ToolCallbackProvider tools, ChatMemory chatMemory) {
-        DefaultChatClientBuilder defaultChatClientBuilder = new DefaultChatClientBuilder(openAiChatModel, ObservationRegistry.NOOP, (ChatClientObservationConvention) null);
+    public ChatClient chatClient(@Qualifier("ollamaChatModel") OllamaChatModel ollamaChatModel, ToolCallbackProvider tools, ChatMemory chatMemory) {
+        DefaultChatClientBuilder defaultChatClientBuilder = new DefaultChatClientBuilder(ollamaChatModel, ObservationRegistry.NOOP, null);
         return defaultChatClientBuilder
                 .defaultTools(tools)
-                .defaultOptions(OpenAiChatOptions.builder()
-                        .model("gpt-4o")
+                .defaultOptions(OllamaOptions.builder()
+                        .model("qwq:latest")
                         .build())
                 .defaultAdvisors(new PromptChatMemoryAdvisor(chatMemory))
                 .build();

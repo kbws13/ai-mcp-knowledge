@@ -1,5 +1,6 @@
 package xyz.kbws.app.config;
 
+import org.springframework.ai.ollama.OllamaChatModel;
 import org.springframework.ai.ollama.OllamaEmbeddingModel;
 import org.springframework.ai.ollama.api.OllamaApi;
 import org.springframework.ai.ollama.api.OllamaOptions;
@@ -49,6 +50,17 @@ public class OllamaConfig {
                 .build();
         return PgVectorStore.builder(jdbcTemplate, embeddingModel)
                 .vectorTableName("vector_store_ollama_deepseek")
+                .build();
+    }
+
+
+    @Bean
+    public OllamaChatModel ollamaChatModel(OllamaApi ollamaApi) {
+        return OllamaChatModel.builder()
+                .ollamaApi(ollamaApi)
+                .defaultOptions(OllamaOptions.builder()
+                        .model("qwq:latest")  // 或 llama3、phi3、mistral 等
+                        .build())
                 .build();
     }
 }

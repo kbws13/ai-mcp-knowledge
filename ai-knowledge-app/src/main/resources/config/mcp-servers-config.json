@@ -1,0 +1,13 @@
+{
+  "mcpServers": {
+    "mcp-server-computer": {
+      "command": "java",
+      "args": [
+        "-Dspring.ai.mcp.server.stdio=true",
+        "-jar",
+        "/Users/fangyuan/Environment/Maven/repository/xyz/kbws/mcp-server-computer/1.0/mcp-server-computer-1.0.jar"
+      ]
+    }
+  }
+}
+
