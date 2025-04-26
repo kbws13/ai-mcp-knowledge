@@ -12,6 +12,7 @@
         <module>ai-knowledge-app</module>
         <module>ai-knowledge-trigger</module>
         <module>mcp-server-computer</module>
+        <module>mcp-server-csdn</module>
     </modules>
 
     <parent>
